@@ -1,6 +1,6 @@
 //*Se define el modelo de la tabla persona
 
-const Persona = (sequelize /*Objeto de conexion*/, Sequelize /*Conjunto de configuraciones proprias del sequelize*/) => {
+const Persona = (sequelize /*Objeto de conexion*/, Sequelize /*Conjunto de configuraciones propias del sequelize*/) => {
     return sequelize.define("Persona" /*Como se va a llamar cada registro (se le agrega una s al final en la tabla de MySQL Workbench)*/, {
         nombre: { //*Nombre de la columna
             type: Sequelize.STRING, //*Tipo de dato que tendra cada registro dentro de la columna "nombre" (str)
@@ -13,7 +13,7 @@ const Persona = (sequelize /*Objeto de conexion*/, Sequelize /*Conjunto de confi
         },
         edad: { 
             type: Sequelize.INTEGER,
-            allowNull: false, 
+            allowNull: false
         },
     }, {
         timestamps: false //*Evita que el MySQL cree dos campos como lo son: fecha-hora de creacion; y fecha-hora de modificacion

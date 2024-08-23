@@ -1,6 +1,5 @@
 const { Sequelize } = require("sequelize"); //*Dentro del paqeuete sequelize nos trae un objeto llamado Sequelize
 const parameters = require("../config/config");
-const { param } = require("../routes/personaRoutes");
 
 //*Se crea un objeto de conexion
 const sequelize = new Sequelize(

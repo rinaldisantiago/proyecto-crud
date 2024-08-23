@@ -5,6 +5,7 @@ const personaRouter = require("./routes/personaRoutes");
 const app = express();
 
 app.use(bodyParser.json()); //*Todas las respuestas de la aplicacion sean formateadas automaticamente en json
+app.use(express.urlencoded({extended: true})); //*Sirve para poder utilizar postman y no crear un archivo json
 app.use("/api/personas", personaRouter);
 
 app.listen(3000, () => {
