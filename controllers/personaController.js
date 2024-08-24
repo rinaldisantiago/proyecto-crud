@@ -1,5 +1,6 @@
 const db = require("../models");
 const Persona = db.persona;
+const { Op } = require('sequelize');
 
 const home = (req, res) => {
   res.status(200).send("Ruta principal de personas"); /* Se establece primero el codigo de estado de http (res.status) donde el 200 representa una respuesta satisfactoria.
@@ -72,9 +73,67 @@ const findById = async (req, res) => {
   }
 };
 
+const update = async (req, res) => {
+  try {
+    const persona = await Persona.update(req.body, {
+      where: {id: req.params.id}
+    })
+    if (persona[0]) {
+      const personaUpdate = await Persona.findByPk(req.params.id);
+      res.status(200).send({ 
+        message: "Actualizado!!",
+        persona: personaUpdate
+      });
+    } else {
+      res.status(404).send({ message: "Not found" });
+    }
+    } catch (error) {
+      res.status(500).send({ message: "Error interno del servidor" });
+    }
+}
+
+const buscarPorNombre = async (req, res) => {
+  try {
+    const keyword = req.body.keyword;
+    if (!keyword) {
+      return res.status(400).send({ message: "Debe proporcionar un keyword" });
+    }
+    const results = await Persona.findAll({
+      where: {nombre: {
+        [Op.like]: `%${keyword}%` 
+      }}
+    })
+    if (results.length > 0) {
+      res.status(200).send({ resultados: results });
+    } else {
+      res.status(404).send({ message: "No hay resultados" });
+    }
+  } catch (error) {
+    res.status(500).send({ message: "Error interno del servidor" });
+  }
+}
+
+const deletePersona = async (req, res) => {
+  try {
+    const persona = await Persona.destroy({
+      where: {id: req.params.id}
+    });
+    if (persona) {
+      res.status(200).send({ message: "Eliminado!!" });
+    } else {
+      res.status(404).send({ message: "ID no encontrado" });
+    }
+  } catch (error) {
+    res.status(500).send({ message: "Error interno del servidor" });
+  }
+}
+
 module.exports = {
   home,
   list,
   create,
   findById,
+  update,
+  buscarPorNombre,
+  deletePersona
 };
