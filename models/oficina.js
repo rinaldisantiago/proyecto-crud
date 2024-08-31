@@ -1,6 +1,6 @@
 const Oficina = (sequelize,Sequelize) =>{
     return sequelize.define("Oficina",{
-        oficina: {
+        nombre: {
             type: Sequelize.STRING,
             allowNull: false,
             unique: true
