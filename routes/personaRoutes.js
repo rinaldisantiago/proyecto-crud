@@ -7,8 +7,11 @@ router.get("/", personaController.home);
 router.get("/list", personaController.list);
 router.post("/create", personaController.create);
 router.get("/info/:id", personaController.findById);
-router.post("/update/:id", personaController.update);
+router.put("/update/:id", personaController.update);
 router.get("/search", personaController.buscarPorNombre);
+router.delete("/delete/:id", personaController.deletePersona);
+router.put("/update/:id",personaController.update);
+router.get("/buscarPorNombre", personaController.buscarPorNombre);
 router.delete("/delete/:id", personaController.deletePersona);
 
 module.exports = router; //*El module.exports hace que podamos exportar la constante router

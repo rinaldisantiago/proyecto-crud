@@ -1,5 +1,7 @@
 //*Se define el modelo de la tabla persona
 
+const bcrypt = require("bcrypt");
+
 const Persona = (sequelize /*Objeto de conexion*/, Sequelize /*Conjunto de configuraciones propias del sequelize*/) => {
     return sequelize.define("Persona" /*Como se va a llamar cada registro (se le agrega una s al final en la tabla de MySQL Workbench)*/, {
         nombre: { //*Nombre de la columna
@@ -15,8 +17,20 @@ const Persona = (sequelize /*Objeto de conexion*/, Sequelize /*Conjunto de confi
             type: Sequelize.INTEGER,
             allowNull: false
         },
+        password: {
+            type: Sequelize.STRING,
+            allowNull: false
+        }
     }, {
-        timestamps: false //*Evita que el MySQL cree dos campos como lo son: fecha-hora de creacion; y fecha-hora de modificacion
+        timestamps: false, //*Evita que el SEQUELIZE cree dos campos como lo son: fecha-hora de creacion; y fecha-hora de modificacion
+        hooks: {
+            beforeCreate: async (persona) => {
+                if (persona.password) {
+                    const salt = await bcrypt.genSalt(10);
+                    persona.password = await bcrypt.hash(persona.password, salt);
+                }
+            },
+        },
     })
 }
 
