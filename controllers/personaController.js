@@ -1,5 +1,3 @@
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 const db = require("../models");
 const Persona = db.persona;
 const { Op } = require('sequelize');
@@ -68,10 +66,10 @@ const findById = async (req, res) => {
     if (persona) {
       res.status(200).send(persona);
     } else {
-      res.status(404).send({ message: "NOT FOUND" });
+      res.status(404).send({ message: "Not found" });
     }
   } catch {
-    res.status(500).send({ message: "SERVER ERROR" });
+    res.status(500).send({ message: "Error interno del server" });
   }
 };
 
@@ -121,12 +119,12 @@ const deletePersona = async (req, res) => {
       where: {id: req.params.id}
     });
     if (persona) {
-      res.status(200).send({ message: "Eliminado!!" });
+      res.status(200).send({ message: "Eliminado!!!" });
     } else {
-      res.status(404).send({ message: "ID no encontrado" });
+      res.status(404).send({ message: "Not found" });
     }
   } catch (error) {
-    res.status(500).send({ message: "Error interno del servidor" });
+    res.status(500).send({ message: "Error interno del servidor", tipo: error.name });
   }
 }
 
