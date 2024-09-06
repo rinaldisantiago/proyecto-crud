@@ -19,6 +19,26 @@ se captura (catch) y se devuelve un mensaje de error con un código de estado 50
 
 const list = async (req, res) => {
   try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 2;
+
+    if (page < 1 || limit < 1) {
+      return res.status(400).send({ 
+        message: "Page and limit must be positive" });
+    }
+
+    const offset = (page - 1) * limit;
+
+    const { count, rows } = await Persona.finAndCountAll({
+      attributes: { exclude: ["password", "oficinaId"] },
+      include: [{
+        model: Oficina,
+        attributes: ["nombre"]
+      }],
+      limit: limit,
+      offset: offset
+    })
+
     const listaPersonas = await Persona.findAll();
     if (listaPersonas.length > 0) {
       res.status(200).send(listaPersonas);
