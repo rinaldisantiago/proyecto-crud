@@ -22,7 +22,7 @@ db.sequelize = sequelize; //*agregamos en el objeto db el sequelize de la consta
 db.persona = require("./persona")(sequelize, Sequelize);
 db.oficina = require("./oficina")(sequelize, Sequelize);
 
-db.oficina.hasMany(db.persona, {foreignKey: "oficinaID"});
-db.persona.belongsTo(db.oficina, {foreignKey: "oficinaID"});
+db.oficina.hasMany(db.persona, {foreignKey: "oficinaId"});
+db.persona.belongsTo(db.oficina, {foreignKey: "oficinaId"});
 
 module.exports = db; //*exportamos el objeto db
